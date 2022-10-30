@@ -13,7 +13,7 @@ public class ConsoleProgress implements Runnable {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
             }
             i++;
 
@@ -25,10 +25,12 @@ public class ConsoleProgress implements Runnable {
         Thread progress = new Thread(new ConsoleProgress());
         progress.start();
         try {
-            Thread.sleep(5000); /* симулируем выполнение параллельной задачи в течение 1 секунды. */
+            Thread.sleep(5000);
+            progress.interrupt();
+            progress.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        progress.interrupt();
+
     }
 }

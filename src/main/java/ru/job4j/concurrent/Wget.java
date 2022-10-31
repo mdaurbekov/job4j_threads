@@ -9,20 +9,25 @@ import java.util.regex.Pattern;
 public class Wget implements Runnable {
 
     public static final String URL_REGEX = "^((https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
+
+    public static final String EXTENSION_REGEX = "\\.[^\\.]+";
     private final String url;
+
+    private final String fileName;
     private final int speed;
 
 
-    public Wget(String url, int speed) {
+    public Wget(String url, int speed, String fileName) {
         this.url = url;
         this.speed = speed;
+        this.fileName = fileName;
     }
 
     @Override
     public void run() {
 
         try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream("download_file.xml")) {
+             FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
             byte[] dataBuffer = new byte[1024];
             int bytesRead;
             long startTime = System.currentTimeMillis();
@@ -46,16 +51,21 @@ public class Wget implements Runnable {
     }
 
     private static void checkArgs(String[] args) {
-        Pattern p = Pattern.compile(URL_REGEX);
-        if (args.length != 2 || args[0].isEmpty() || args[1].isEmpty()) {
+        Pattern patternUrl = Pattern.compile(URL_REGEX);
+        Pattern patternExt = Pattern.compile(EXTENSION_REGEX);
+        if (args.length != 3 || args[0].isEmpty() || args[1].isEmpty() || args[2].isEmpty()) {
             throw new IllegalArgumentException("Не заполнены параметры");
         }
 
+        if (!patternUrl.matcher(args[0]).find()) {
+            throw new IllegalArgumentException("Введите корректную ссылку на файл");
+        }
         if (Integer.parseInt(args[1]) < 0) {
             throw new IllegalArgumentException("Некорректное значение параметра");
         }
-        if (!p.matcher(args[0]).find()) {
-            throw new IllegalArgumentException("Введите корректную ссылку на файл");
+
+        if (!patternExt.matcher(args[2]).find()) {
+            throw new IllegalArgumentException("Неверное расширение файла");
         }
     }
 
@@ -63,7 +73,8 @@ public class Wget implements Runnable {
         checkArgs(args);
         String url = args[0];
         int speed = Integer.parseInt(args[1]);
-        Thread wget = new Thread(new Wget(url, speed));
+        String fileName = args[2];
+        Thread wget = new Thread(new Wget(url, speed, fileName));
         wget.start();
         wget.join();
     }

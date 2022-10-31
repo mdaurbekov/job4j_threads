@@ -30,8 +30,8 @@ public class ConsoleProgress implements Runnable {
             progress.interrupt();
             progress.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
-        progress.interrupt();
+
     }
 }

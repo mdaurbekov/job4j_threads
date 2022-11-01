@@ -16,6 +16,8 @@ public class Wget implements Runnable {
     private final String fileName;
     private final int speed;
 
+    private final static Pattern patternUrl = Pattern.compile(URL_REGEX);
+    private final static Pattern patternExt = Pattern.compile(EXTENSION_REGEX);
 
     public Wget(String url, int speed, String fileName) {
         this.url = url;
@@ -51,8 +53,6 @@ public class Wget implements Runnable {
     }
 
     private static void checkArgs(String[] args) {
-        Pattern patternUrl = Pattern.compile(URL_REGEX);
-        Pattern patternExt = Pattern.compile(EXTENSION_REGEX);
         if (args.length != 3 || args[0].isEmpty() || args[1].isEmpty() || args[2].isEmpty()) {
             throw new IllegalArgumentException("Не заполнены параметры");
         }

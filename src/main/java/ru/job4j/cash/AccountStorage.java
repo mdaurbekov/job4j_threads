@@ -34,7 +34,7 @@ public class AccountStorage {
         boolean rezult = false;
         int valueFrom = getById(fromId).get().amount();
         int valueTo = getById(toId).get().amount();
-        if ((valueFrom - valueTo) >= 0) {
+        if ((valueFrom - amount) >= 0) {
             Account accountFrom = new Account(getById(fromId).get().id(), valueFrom - amount);
             update(accountFrom);
             Account accountTo = new Account(getById(toId).get().id(), valueTo + amount);

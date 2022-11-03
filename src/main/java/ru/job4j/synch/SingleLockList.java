@@ -11,8 +11,8 @@ public class SingleLockList<T> implements Iterable<T> {
     @GuardedBy("this")
     private final List<T> list;
 
-    public SingleLockList(List<T> list) throws CloneNotSupportedException {
-        this.list = (List) ((SingleLockList) list).clone();
+    public SingleLockList(List<T> list)  {
+        this.list = copy(list);
     }
 
     public synchronized void add(T value) {

@@ -3,6 +3,7 @@ package ru.job4j.synch;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,8 +12,9 @@ import static org.junit.Assert.*;
 public class SingleLockListTest {
 
     @Test
-    public void add() throws InterruptedException, CloneNotSupportedException {
-        SingleLockList<Integer> list = new SingleLockList<>(new ArrayList<>());
+    public void add() throws InterruptedException {
+
+        SingleLockList<Integer> list = new SingleLockList<>(new ArrayList<Integer>());
         Thread first = new Thread(() -> list.add(1));
         Thread second = new Thread(() -> list.add(2));
         first.start();

@@ -31,11 +31,11 @@ public class AccountStorage {
 
     public synchronized boolean transfer(int fromId, int toId, int amount) {
         boolean rezult = false;
-        Account accountFrom = getById(fromId).get();
-        Account accountTo = getById(toId).get();
-        if (accountFrom.amount() >= amount) {
-            update(new Account(accountFrom.id(),  accountFrom.amount() - amount));
-            update(new Account(accountTo.id(),  accountTo.amount() + amount));
+        Optional<Account> accountFrom = getById(fromId);
+        Optional<Account> accountTo = getById(toId);
+        if ( (accountFrom.isPresent() && accountTo.isPresent()) && accountFrom.get().amount() >= amount) {
+            update(new Account(accountFrom.get().id(),  accountFrom.get().amount() - amount));
+            update(new Account(accountTo.get().id(),  accountTo.get().amount() + amount));
             rezult = true;
         }
 

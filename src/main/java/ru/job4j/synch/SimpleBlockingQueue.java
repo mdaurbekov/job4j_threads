@@ -10,7 +10,7 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
-    private  Queue<T> queue = new LinkedList<>();
+    private Queue<T> queue = new LinkedList<>();
 
 
     public synchronized void offer(T value) {
@@ -23,9 +23,8 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized T poll() {
         synchronized (this) {
-            T t = queue.poll();
             this.check();
-            return t;
+            return queue.poll();
         }
 
     }
@@ -41,4 +40,6 @@ public class SimpleBlockingQueue<T> {
             }
         }
     }
+
+
 }

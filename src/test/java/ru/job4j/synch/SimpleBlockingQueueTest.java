@@ -14,9 +14,21 @@ public class SimpleBlockingQueueTest {
 
     @Test
     public void test() throws InterruptedException {
-        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
-        Thread producer  = new Thread(() -> queue.offer(1));
-        Thread customer = new Thread(() -> queue.poll());
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(3);
+        Thread producer  = new Thread(() -> {
+            try {
+                queue.offer(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Thread customer = new Thread(() -> {
+            try {
+                queue.poll();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
         producer.start();
         customer.start();
         producer.join();

@@ -2,7 +2,7 @@ package ru.job4j.cash;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AccountStorageTest {
 
@@ -48,7 +48,7 @@ class AccountStorageTest {
 
         storage.add(new Account(3, 50));
         storage.add(new Account(4, 50));
-        assertThat(storage.transfer(3,4, 100)).isFalse();
+        assertThat(storage.transfer(3, 4, 100)).isFalse();
 
     }
 }

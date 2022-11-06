@@ -16,8 +16,8 @@ public class Wget implements Runnable {
     private final String fileName;
     private final int speed;
 
-    private final static Pattern patternUrl = Pattern.compile(URL_REGEX);
-    private final static Pattern patternExt = Pattern.compile(EXTENSION_REGEX);
+    private final static Pattern PATTERN_URL = Pattern.compile(URL_REGEX);
+    private final static Pattern PATTERN_EXT = Pattern.compile(EXTENSION_REGEX);
 
     public Wget(String url, int speed, String fileName) {
         this.url = url;
@@ -57,14 +57,14 @@ public class Wget implements Runnable {
             throw new IllegalArgumentException("Не заполнены параметры");
         }
 
-        if (!patternUrl.matcher(args[0]).find()) {
+        if (!PATTERN_URL.matcher(args[0]).find()) {
             throw new IllegalArgumentException("Введите корректную ссылку на файл");
         }
         if (Integer.parseInt(args[1]) < 0) {
             throw new IllegalArgumentException("Некорректное значение параметра");
         }
 
-        if (!patternExt.matcher(args[2]).find()) {
+        if (!PATTERN_EXT.matcher(args[2]).find()) {
             throw new IllegalArgumentException("Неверное расширение файла");
         }
     }

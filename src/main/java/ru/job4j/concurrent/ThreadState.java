@@ -3,10 +3,12 @@ package ru.job4j.concurrent;
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(
-                () -> {}, "first"
+                () -> {
+                }, "first"
         );
         Thread second = new Thread(
-                () -> {}, "second"
+                () -> {
+                }, "second"
         );
         System.out.println("Нить: " + first.getName() + " - " + first.getState());
         System.out.println("Нить: " + second.getName() + " - " + second.getState());

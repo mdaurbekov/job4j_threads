@@ -33,9 +33,9 @@ public class AccountStorage {
         boolean rezult = false;
         Optional<Account> accountFrom = getById(fromId);
         Optional<Account> accountTo = getById(toId);
-        if ( (accountFrom.isPresent() && accountTo.isPresent()) && accountFrom.get().amount() >= amount) {
-            update(new Account(accountFrom.get().id(),  accountFrom.get().amount() - amount));
-            update(new Account(accountTo.get().id(),  accountTo.get().amount() + amount));
+        if ((accountFrom.isPresent() && accountTo.isPresent()) && accountFrom.get().amount() >= amount) {
+            update(new Account(accountFrom.get().id(), accountFrom.get().amount() - amount));
+            update(new Account(accountTo.get().id(), accountTo.get().amount() + amount));
             rezult = true;
         }
 

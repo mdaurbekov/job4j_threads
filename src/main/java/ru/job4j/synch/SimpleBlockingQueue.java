@@ -7,20 +7,20 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @ThreadSafe
-public class SimpleBlockingQueue<T> {
+public final class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
 
-    private final int size;
+    private final int queueSize;
 
-    public SimpleBlockingQueue(int size) {
-        this.size = size;
+    public SimpleBlockingQueue(final int size) {
+        this.queueSize = size;
     }
 
-    public synchronized void offer(T value) throws InterruptedException {
+    public synchronized void offer(final T value) throws InterruptedException {
         synchronized (this) {
-            while (queue.size() > size ){
+            while (queue.size() > queueSize) {
                 this.wait();
             }
             queue.add(value);
@@ -31,7 +31,7 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized T poll() throws InterruptedException {
         synchronized (this) {
-            while (queue.isEmpty()){
+            while (queue.isEmpty()) {
                 this.wait();
             }
             T result = queue.poll();
@@ -40,7 +40,6 @@ public class SimpleBlockingQueue<T> {
         }
 
     }
-
 
 
 }

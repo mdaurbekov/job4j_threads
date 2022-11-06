@@ -38,8 +38,7 @@ public final class SimpleBlockingQueue<T> {
             this.notifyAll();
             return result;
         }
-
     }
 
-
+/**/
 }

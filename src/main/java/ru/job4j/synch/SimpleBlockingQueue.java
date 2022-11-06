@@ -40,5 +40,5 @@ public final class SimpleBlockingQueue<T> {
         }
     }
 
-/**/
+
 }

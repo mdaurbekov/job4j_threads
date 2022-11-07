@@ -1,13 +1,12 @@
 package ru.job4j;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class CASCountTest {
-
 
     @Test
     public void incrementAndGet() throws InterruptedException {
@@ -23,7 +22,7 @@ public class CASCountTest {
         first.start();
         second.start();
         Thread.sleep(500);
-        assertThat(casCount.get(), is(4));
+        assertThat(casCount.get()).isEqualTo(4);
 
     }
 

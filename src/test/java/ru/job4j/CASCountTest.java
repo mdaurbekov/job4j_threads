@@ -10,7 +10,6 @@ public class CASCountTest {
 
     @Test
     public void incrementAndGet() throws InterruptedException {
-
         CASCount casCount = new CASCount();
         Thread first = new Thread(casCount::increment);
         Thread second = new Thread(() -> {

@@ -13,8 +13,9 @@ public class ThreadPool {
 
     public ThreadPool() {
         for (int i = 0; i < size; i++) {
-            threads.add(new Thread(new TaskWorker()));
-            threads.get(i).start();
+            Thread thread = new Thread(new TaskWorker());
+            thread.start();
+            threads.add(thread);
         }
     }
 

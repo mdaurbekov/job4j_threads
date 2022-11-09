@@ -9,10 +9,8 @@ public class ThreadPoolTest {
 
     @Test
     public void testWork() throws InterruptedException {
-
             int[] count = {0};
-            int size = Runtime.getRuntime().availableProcessors();
-            ThreadPool threadPool = new ThreadPool(size);
+            ThreadPool threadPool = new ThreadPool();
             for (int i = 0; i < 10; i++) {
                 threadPool.work(() -> count[0]++);
             }

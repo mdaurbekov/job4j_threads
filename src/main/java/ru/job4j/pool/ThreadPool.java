@@ -6,34 +6,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ThreadPool {
-    private int size;
-
-    private volatile boolean isRunning = true;
+    private final int size = Runtime.getRuntime().availableProcessors();
+    ;
 
     private final List<Thread> threads = new LinkedList<>();
     private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(size);
 
-    public ThreadPool(int size) {
-        this.size = size;
+    public ThreadPool() {
         for (int i = 0; i < size; i++) {
             threads.add(new Thread(new TaskWorker()));
-        }
-        for (Thread thread : threads) {
-            thread.start();
-
+            threads.get(i).start();
         }
     }
 
-    public void work(Runnable job) {
-        if (threads.isEmpty()) {
-            throw new IllegalStateException("Нет потоков");
-        }
-        try {
-            tasks.offer(job);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    public void work(Runnable job) throws InterruptedException {
+        tasks.offer(job);
 
     }
 
@@ -45,6 +32,24 @@ public class ThreadPool {
 
     }
 
+    public static void main(String[] args) {
+        ThreadPool threadPool = new ThreadPool();
+        int[] count = {0};
+        for (int i = 0; i < 10; i++) {
+            try {
+                threadPool.work(() -> System.out.println(count[0]++));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        threadPool.shutdown();
+
+    }
 
     private final class TaskWorker implements Runnable {
 

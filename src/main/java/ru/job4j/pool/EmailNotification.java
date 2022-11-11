@@ -8,9 +8,13 @@ public class EmailNotification {
             Runtime.getRuntime().availableProcessors());
 
     public void emailTo(User user) {
-
-        String subject = "Notification " + user.getUsername() + " to email " + user.getEmail();
-        String body = "Add a new event to " + user.getUsername();
+        StringBuilder stringBuilderSubject = new StringBuilder();
+        StringBuilder stringBuilderBody = new StringBuilder();
+        String subject = stringBuilderSubject.append("Notification ")
+                .append(user.getUsername()).append(" to email ")
+                .append(user.getEmail()).toString();
+        String body = stringBuilderBody.append("Add a new event to ")
+                .append(user.getUsername()).toString();
 
     }
 

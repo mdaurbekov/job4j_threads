@@ -7,13 +7,11 @@ public class MergeSort {
     }
 
     private static int[] sort(int[] array, int from, int to) {
-        // при следующем условии, массив из одного элемента
-        // делить нечего, возвращаем элемент
+
         if (from == to) {
             return new int[] { array[from] };
         }
-        // попали сюда, значит в массиве более одного элемента
-        // находим середину
+        //присоединил к пред
         int mid = (from + to) / 2;
         // объединяем отсортированные части
         return merge(

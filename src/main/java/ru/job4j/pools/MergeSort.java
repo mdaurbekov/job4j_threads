@@ -7,8 +7,7 @@ public class MergeSort {
     }
 
     private static int[] sort(int[] array, int from, int to) {
-        // при следующем условии, массив из одного элемента
-        // делить нечего, возвращаем элемент
+
         if (from == to) {
             return new int[] { array[from] };
         }

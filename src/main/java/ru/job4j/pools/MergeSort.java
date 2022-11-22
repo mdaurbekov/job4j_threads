@@ -7,7 +7,6 @@ public class MergeSort {
     }
 
     private static int[] sort(int[] array, int from, int to) {
-
         if (from == to) {
             return new int[]{array[from]};
         }
